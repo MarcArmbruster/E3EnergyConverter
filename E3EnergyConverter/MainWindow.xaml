@@ -1,0 +1,191 @@
+﻿<Window
+    x:Class="E3EnergyConverter.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:E3EnergyConverter"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Windows E3 Helper: MilliJoule Convertion and E3 Dump Creation"
+    Width="600"
+    Height="500"
+    WindowStartupLocation="CenterScreen"
+    mc:Ignorable="d">
+    <Window.Background>
+        <LinearGradientBrush>
+            <LinearGradientBrush.GradientStops>
+                <GradientStop Offset="0.0" Color="LightGreen" />
+                <GradientStop Offset="1.1" Color="LightYellow" />
+            </LinearGradientBrush.GradientStops>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Window.Resources>
+        <local:StringToDecimalConverter x:Key="StringToDecimalConverter" />
+    </Window.Resources>
+
+    <DockPanel>
+
+        <StatusBar DockPanel.Dock="Bottom">
+            <StatusBarItem>Marc Armbruster</StatusBarItem>
+        </StatusBar>
+
+        <TabControl Background="{Binding}">
+            <TabItem Header="Conversion">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Content="E3 Energy value converter: converts the E3 mill Joule values to other units." />
+
+                    <Label
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Content="E3 value in mJ" />
+                    <TextBox
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Left"
+                        InputScope="Number"
+                        Text="{Binding Path=MilliJoule, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource StringToDecimalConverter}}" />
+
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Content="Energy mix (g CO2/kWh)" />
+                    <TextBox
+                        Grid.Row="2"
+                        Grid.Column="1"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Left"
+                        InputScope="Number"
+                        Text="{Binding Path=EnergyMix, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource StringToDecimalConverter}}" />
+
+                    <Label
+                        Grid.Row="3"
+                        Grid.Column="0"
+                        Content="Car factor" />
+                    <TextBox
+                        Grid.Row="3"
+                        Grid.Column="1"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Left"
+                        InputScope="Number"
+                        Text="{Binding Path=CarFactor, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource StringToDecimalConverter}}" />
+
+                    <Label
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        Content="Usage factor" />
+                    <TextBox
+                        Grid.Row="4"
+                        Grid.Column="1"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Left"
+                        InputScope="Number"
+                        Text="{Binding Path=UsageFactor, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource StringToDecimalConverter}}" />
+
+                    <Label
+                        Grid.Row="5"
+                        Grid.Column="0"
+                        Content="Energy in mWh" />
+                    <TextBlock
+                        Grid.Row="5"
+                        Grid.Column="1"
+                        Text="{Binding Path=MilliWattHours, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+
+                    <Label
+                        Grid.Row="6"
+                        Grid.Column="0"
+                        Content="Energy in kWh" />
+                    <TextBlock
+                        Grid.Row="6"
+                        Grid.Column="1"
+                        Text="{Binding Path=KiloWattHours, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+
+                    <Label
+                        Grid.Row="7"
+                        Grid.Column="0"
+                        Content="mg CO2" />
+                    <TextBlock
+                        Grid.Row="7"
+                        Grid.Column="1"
+                        Text="{Binding Path=MilliGrammCo2, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+
+                    <Label
+                        Grid.Row="8"
+                        Grid.Column="0"
+                        Content="g CO2" />
+                    <TextBlock
+                        Grid.Row="8"
+                        Grid.Column="1"
+                        Text="{Binding Path=GrammCo2, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+
+                    <Label
+                        Grid.Row="9"
+                        Grid.Column="0"
+                        Content="kg CO2" />
+                    <TextBlock
+                        Grid.Row="9"
+                        Grid.Column="1"
+                        Text="{Binding Path=KiloGrammCo2, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+
+                    <Label
+                        Grid.Row="10"
+                        Grid.Column="0"
+                        Content="Kilometers by car (german value)"
+                        ToolTip="150 g CO2 per kilometer" />
+                    <TextBlock
+                        Grid.Row="10"
+                        Grid.Column="1"
+                        Text="{Binding Path=CarKilometers, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}" />
+
+                </Grid>
+            </TabItem>
+            <TabItem Header="Dump Creation">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!--  !!! works only on x64 !!!  -->
+                    <Button
+                        Grid.Row="0"
+                        Width="100"
+                        Margin="10"
+                        HorizontalAlignment="Left"
+                        Command="{Binding CmdAgg[DumpCommand].Command}"
+                        Content="Create Dump" />
+                    <TextBox
+                        Grid.Row="1"
+                        Margin="10"
+                        Text="{Binding DumpFilePath, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+                </Grid>
+
+            </TabItem>
+        </TabControl>
+
+    </DockPanel>
+</Window>
