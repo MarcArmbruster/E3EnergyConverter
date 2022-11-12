@@ -9,7 +9,7 @@
         /// <returns>The value in mWh.</returns>
         internal static decimal MilliJouleToMilliWattHour(decimal mJoule)
         {
-            return mJoule / 360m * 100m;
+            return mJoule * 100 / 360m;
         }
 
         /// <summary>
@@ -24,7 +24,9 @@
             {
                 return 0m;
             }
-            return mWh / 1000000 / energyMix;
+
+            var kWh = mWh / 1000000;
+            return kWh / energyMix;
         }
 
         /// <summary>

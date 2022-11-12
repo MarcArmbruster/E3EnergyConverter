@@ -1,0 +1,14 @@
+
+REM Step 1: Stop the Diagnostic Policy Service
+sc stop dps
+
+REM Step 2: navigate to sru folder
+cd:\Windows\System32\sru
+
+REM Step 3: move (save) current file to a backup file
+move .\SRUDB.dat srudb.dat.bakup
+
+REM Step 4: restart the Diagnostic Policy Service
+sc start dps
+
+REM now, the data will be written in a new and empty database file !

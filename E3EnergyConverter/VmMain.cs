@@ -5,6 +5,12 @@
 
     public class VmMain : BaseVm
     {
+        public double ScaleFactor
+        {
+            get => this.GetPropertyValue<double>();
+            set => this.SetPropertyValue(value);
+        }
+
         public decimal? MilliJoule
         {
             get => this.GetPropertyValue<decimal?>();
@@ -17,14 +23,19 @@
             set => this.SetPropertyValue(value, null, () => this.NotifyAllGetterProperties());
         }
 
-        public decimal? MilliWattHours
+        public string MilliWattHoursAsString
         {
-            get => Converter.MilliJouleToMilliWattHour(this.MilliJoule ?? 0m);
+            get => $"{Converter.MilliJouleToMilliWattHour(this.MilliJoule ?? 0m).ToString("N8")} mWh";
         }
 
-        public decimal? KiloWattHours
+        public decimal? MilliWattHoursTotal
         {
-            get => Converter.MilliJouleToMilliWattHour(this.MilliJoule ?? 0m) / 1000000;
+            get => Converter.MilliJouleToMilliWattHour(this.MilliJoule ?? 0m) * UsageFactor;
+        }
+
+        public decimal? KiloWattHoursTotal
+        {
+            get => Converter.MilliJouleToMilliWattHour(this.MilliJoule ?? 0m) / 1000000 * UsageFactor;
         }
 
         public decimal? UsageFactor
@@ -46,12 +57,12 @@
 
         public decimal? GrammCo2
         {
-            get => this.UsageFactor * Converter.MilliWattHourToGrammCo2(this.MilliWattHours ?? 0m, this.EnergyMix ?? 0m);
+            get => this.UsageFactor * Converter.MilliWattHourToGrammCo2(this.MilliWattHoursTotal ?? 0m, this.EnergyMix ?? 0m);
         }
 
         public decimal? KiloGrammCo2
         {
-            get => this.UsageFactor / 1000 * Converter.MilliWattHourToGrammCo2(this.MilliWattHours ?? 0m, this.EnergyMix ?? 0m);
+            get => this.UsageFactor / 1000 * Converter.MilliWattHourToGrammCo2(this.MilliWattHoursTotal ?? 0m, this.EnergyMix ?? 0m);
         }
 
         public decimal? CarKilometers
@@ -67,6 +78,7 @@
 
         public VmMain()
         {
+            this.ScaleFactor = 2;
             this.MilliJoule = 0m;
             this.EnergyMix = 0m;
             this.UsageFactor = 1m;
@@ -93,9 +105,10 @@
 
         private void NotifyAllGetterProperties()
         {
-            this.NotifyPropertyChanged(nameof(this.MilliWattHours));
+            this.NotifyPropertyChanged(nameof(this.MilliWattHoursAsString));
+            this.NotifyPropertyChanged(nameof(this.MilliWattHoursTotal));
             this.NotifyPropertyChanged(nameof(this.MilliGrammCo2));
-            this.NotifyPropertyChanged(nameof(this.KiloWattHours));
+            this.NotifyPropertyChanged(nameof(this.KiloWattHoursTotal));
             this.NotifyPropertyChanged(nameof(this.GrammCo2));
             this.NotifyPropertyChanged(nameof(this.KiloGrammCo2));
             this.NotifyPropertyChanged(nameof(this.CarKilometers));

@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "E3EnergyConverter", "E3Ener
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{E4394588-565D-4A5C-9C67-BF8755A730B1}"
 	ProjectSection(SolutionItems) = preProject
+		Dump_via_CMD.txt = Dump_via_CMD.txt
+		E3_Reset_via_CMD.txt = E3_Reset_via_CMD.txt
 		README.md = README.md
 	EndProjectSection
 EndProject

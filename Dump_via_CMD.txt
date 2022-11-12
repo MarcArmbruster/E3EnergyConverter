@@ -1,0 +1,6 @@
+
+REM Command line
+POWERCFG /SRUMUTIL [/OUTPUT ] [/XML | /CSV]
+
+REM Example:
+REM   POWERCFG /SRUMUTIL /CSV /OUTPUT "myDumpFile.csv"
