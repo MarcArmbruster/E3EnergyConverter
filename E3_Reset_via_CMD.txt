@@ -12,3 +12,4 @@ REM Step 4: restart the Diagnostic Policy Service
 sc start dps
 
 REM now, the data will be written in a new and empty database file !
+

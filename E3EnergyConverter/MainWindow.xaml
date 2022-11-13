@@ -26,12 +26,17 @@
 
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem>Marc Armbruster</StatusBarItem>
+            <StatusBarItem>
+                <Separator />
+            </StatusBarItem>
+            <StatusBarItem>Zoom: 1</StatusBarItem>
             <Slider
                 x:Name="scaleSlider"
                 Width="150"
                 Maximum="5"
                 Minimum="1"
                 Value="{Binding ScaleFactor, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
+            <StatusBarItem>5</StatusBarItem>
         </StatusBar>
 
         <TabControl Background="{Binding}">
@@ -44,6 +49,8 @@
 
                 <Grid>
                     <Grid.RowDefinitions>
+                        <RowDefinition Height="30" />
+                        <RowDefinition Height="30" />
                         <RowDefinition Height="30" />
                         <RowDefinition Height="30" />
                         <RowDefinition Height="30" />
@@ -77,12 +84,7 @@
                         Grid.Column="1"
                         Orientation="Horizontal">
 
-                        <TextBox
-                            Width="200"
-                            HorizontalAlignment="Stretch"
-                            HorizontalContentAlignment="Left"
-                            InputScope="Number"
-                            Text="{Binding Path=MilliJoule, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource StringToDecimalConverter}}" />
+                        <TextBox InputScope="Number" Text="{Binding Path=MilliJoule, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource StringToDecimalConverter}}" />
                         <TextBlock
                             Width="200"
                             HorizontalAlignment="Stretch"
@@ -96,8 +98,6 @@
                     <TextBox
                         Grid.Row="2"
                         Grid.Column="1"
-                        HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Left"
                         InputScope="Number"
                         Text="{Binding Path=EnergyMix, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource StringToDecimalConverter}}" />
 
@@ -108,8 +108,6 @@
                     <TextBox
                         Grid.Row="3"
                         Grid.Column="1"
-                        HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Left"
                         InputScope="Number"
                         Text="{Binding Path=CarFactor, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource StringToDecimalConverter}}" />
 
@@ -120,69 +118,77 @@
                     <TextBox
                         Grid.Row="4"
                         Grid.Column="1"
-                        HorizontalAlignment="Stretch"
-                        HorizontalContentAlignment="Left"
                         InputScope="Number"
                         Text="{Binding Path=UsageFactor, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource StringToDecimalConverter}}" />
 
                     <Label
                         Grid.Row="5"
                         Grid.Column="0"
-                        Content="Energy in mWh" />
-                    <TextBlock
+                        Content="Costs Euro ct. / kWh" />
+                    <TextBox
                         Grid.Row="5"
                         Grid.Column="1"
-                        Text="{Binding Path=MilliWattHoursTotal, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat=N8}" />
+                        InputScope="Number"
+                        Text="{Binding Path=CostsPerKWH, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay, Converter={StaticResource StringToDecimalConverter}, StringFormat=N2}" />
 
                     <Label
                         Grid.Row="6"
+                        Grid.Column="0"
+                        Content="Energy in mWh" />
+                    <TextBlock
+                        Grid.Row="6"
+                        Grid.Column="1"
+                        Text="{Binding Path=MilliWattHoursTotal, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat=N0}" />
+
+                    <Label
+                        Grid.Row="7"
                         Grid.Column="0"
                         Content="Energy in kWh" />
                     <TextBlock
-                        Grid.Row="6"
-                        Grid.Column="1"
-                        Text="{Binding Path=KiloWattHoursTotal, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat=N8}" />
-
-                    <Label
-                        Grid.Row="7"
-                        Grid.Column="0"
-                        Content="mg CO2" />
-                    <TextBlock
                         Grid.Row="7"
                         Grid.Column="1"
-                        Text="{Binding Path=MilliGrammCo2, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat=N8}" />
+                        Text="{Binding Path=KiloWattHoursTotal, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat=N1}" />
 
                     <Label
                         Grid.Row="8"
+                        Grid.Column="0"
+                        Content="Total energy costs" />
+                    <TextBlock
+                        Grid.Row="8"
+                        Grid.Column="1"
+                        Text="{Binding Path=CostsTotal, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat=N2}" />
+
+                    <Label
+                        Grid.Row="9"
                         Grid.Column="0"
                         Content="g CO2" />
                     <TextBlock
-                        Grid.Row="8"
-                        Grid.Column="1"
-                        Text="{Binding Path=GrammCo2, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat=N8}" />
-
-                    <Label
-                        Grid.Row="9"
-                        Grid.Column="0"
-                        Content="kg CO2" />
-                    <TextBlock
                         Grid.Row="9"
                         Grid.Column="1"
-                        Text="{Binding Path=KiloGrammCo2, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat=N8}" />
+                        Text="{Binding Path=GrammCo2, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat=N0}" />
 
                     <Label
                         Grid.Row="10"
+                        Grid.Column="0"
+                        Content="kg CO2" />
+                    <TextBlock
+                        Grid.Row="10"
+                        Grid.Column="1"
+                        Text="{Binding Path=KiloGrammCo2, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat=N1}" />
+
+                    <Label
+                        Grid.Row="11"
                         Grid.Column="0"
                         Content="Kilometers by car (german value)"
                         ToolTip="150 g CO2 per kilometer" />
                     <TextBlock
-                        Grid.Row="10"
+                        Grid.Row="11"
                         Grid.Column="1"
                         Text="{Binding Path=CarKilometers, UpdateSourceTrigger=PropertyChanged, Mode=OneWay, StringFormat=N1}" />
 
                 </Grid>
             </TabItem>
-            <TabItem Header="Dump Creation">
+            <TabItem Header="E3 Dump Creation">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto" />

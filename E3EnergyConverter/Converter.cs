@@ -9,7 +9,7 @@
         /// <returns>The value in mWh.</returns>
         internal static decimal MilliJouleToMilliWattHour(decimal mJoule)
         {
-            return mJoule * 100 / 360m;
+            return mJoule / 3600m;
         }
 
         /// <summary>
@@ -35,10 +35,9 @@
         /// <param name="mJoule">Milli Joule value.</param>
         /// <param name="energyMix">Local energy mix in g CO2 per kWh.</param>
         /// <returns></returns>
-        internal static decimal MilliJouleToGrammCo2(decimal mJoule, decimal energyMix)
-        {
-            var mWh = MilliJouleToMilliWattHour(mJoule);
-            return MilliWattHourToGrammCo2(mWh, energyMix);
+        internal static decimal KiloWattHoursToGrammCo2(decimal? kWh, decimal? energyMix)
+        {            
+            return (kWh ?? 0m) * (energyMix ?? 0m);
         }
 
         /// <summary>
