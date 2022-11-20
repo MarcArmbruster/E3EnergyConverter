@@ -45,6 +45,57 @@
                 <ScaleTransform x:Name="transformation" ScaleX="{Binding Path=ScaleFactor, UpdateSourceTrigger=PropertyChanged}" ScaleY="{Binding Path=ScaleFactor, UpdateSourceTrigger=PropertyChanged}" />
             </TabControl.LayoutTransform>
 
+            <TabItem Header="E3 Dump Creation">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!--  !!! works only on x64 !!!  -->
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="60" />
+                            <ColumnDefinition Width="150" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button
+                            Width="40"
+                            Height="26"
+                            Command="{Binding CmdAgg[FolderCommand].Command}"
+                            Content="Folder"
+                            ToolTip="Select ouput folder" />
+
+                        <TextBox
+                            Grid.Column="1"
+                            Text="{Binding DumpFileName, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                            ToolTip="File name" />
+
+                        <TextBox
+                            Grid.Column="2"
+                            MinWidth="350"
+                            Margin="10"
+                            Background="LightGray"
+                            IsReadOnly="True"
+                            Text="{Binding DumpFilePath, UpdateSourceTrigger=PropertyChanged, Mode=OneWay}"
+                            ToolTip="Full path" />
+                    </Grid>
+
+                    <Button
+                        Grid.Row="3"
+                        Width="100"
+                        Margin="10,10,10,10"
+                        HorizontalAlignment="Left"
+                        Command="{Binding CmdAgg[DumpCommand].Command}"
+                        Content="Create Dump" />
+                </Grid>
+
+            </TabItem>
+
             <TabItem Header="Conversion">
 
                 <Grid>
@@ -104,7 +155,7 @@
                     <Label
                         Grid.Row="3"
                         Grid.Column="0"
-                        Content="Car factor" />
+                        Content="Car factor (g CO2/km)" />
                     <TextBox
                         Grid.Row="3"
                         Grid.Column="1"
@@ -152,7 +203,7 @@
                     <Label
                         Grid.Row="8"
                         Grid.Column="0"
-                        Content="Total energy costs" />
+                        Content="Total energy costs (Euro)" />
                     <TextBlock
                         Grid.Row="8"
                         Grid.Column="1"
@@ -179,8 +230,7 @@
                     <Label
                         Grid.Row="11"
                         Grid.Column="0"
-                        Content="Kilometers by car (german value)"
-                        ToolTip="150 g CO2 per kilometer" />
+                        Content="Kilometers by car" />
                     <TextBlock
                         Grid.Row="11"
                         Grid.Column="1"
@@ -188,29 +238,7 @@
 
                 </Grid>
             </TabItem>
-            <TabItem Header="E3 Dump Creation">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
 
-                    <!--  !!! works only on x64 !!!  -->
-                    <Button
-                        Grid.Row="0"
-                        Width="100"
-                        Margin="10"
-                        HorizontalAlignment="Left"
-                        Command="{Binding CmdAgg[DumpCommand].Command}"
-                        Content="Create Dump" />
-                    <TextBox
-                        Grid.Row="1"
-                        Margin="10"
-                        Text="{Binding DumpFilePath, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" />
-                </Grid>
-
-            </TabItem>
         </TabControl>
 
     </DockPanel>

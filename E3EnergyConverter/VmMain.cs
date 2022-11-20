@@ -76,15 +76,34 @@
             get => Converter.ToCarKilometers(this.GrammCo2, this.CarFactor).ToString("N1");
         }
 
-        public string DumpFilePath 
+        public string DumpFileName
         {
             get => this.GetPropertyValue<string>();
-            set => this.SetPropertyValue(value);
+            set => this.SetPropertyValue(value, null, () => this.NotifyPropertyChanged(nameof(DumpFilePath)));
+        }
+
+        public string DumpFolder
+        {
+            get => this.GetPropertyValue<string>();
+            set => this.SetPropertyValue(value, null, () => this.NotifyPropertyChanged(nameof(DumpFilePath)));
+        }
+
+        public string DumpFilePath 
+        {
+            get
+            {
+                if (this.DumpFolder == null && this.DumpFileName == null)
+                {
+                    return string.Empty;
+                }
+
+                return System.IO.Path.Combine(this.DumpFolder ?? string.Empty, this.DumpFileName ?? string.Empty);
+            }
         }
 
         public VmMain()
         {
-            this.ScaleFactor = 1.5;
+            this.ScaleFactor = 1;
             this.CostsPerKWH = 13; /* 13 Euro cent/kWh for industry usage (private: 40 Euro cent/kWh)*/
             this.MilliJoule = 0m;
             this.EnergyMix = 0m;
@@ -98,6 +117,10 @@
             this.CmdAgg.AddOrSetCommand(
                 "DumpCommand", 
                 p1 => this.CreateE3Dump(),
+                p2 => System.IO.Directory.Exists(this.DumpFolder) && !string.IsNullOrEmpty(this.DumpFileName));
+            this.CmdAgg.AddOrSetCommand(
+                "FolderCommand",
+                p1 => this.SelectFolder(),
                 p2 => true);
         }
 
@@ -112,6 +135,11 @@
             {
                 MessageBox.Show("Dump file created!", "E3 Dump", MessageBoxButton.OK, MessageBoxImage.Information);
             }
+        }
+
+        private void SelectFolder()
+        {           
+            this.DumpFolder = Folder.Select();
         }
 
         private void NotifyAllGetterProperties()
